@@ -2,7 +2,7 @@ import subprocess
 
 FORMATS = [144, 240, 360, 480, 720, 1080]
 
-def quality_checker(link):
+def quality(link):
     t = subprocess.run(["yt-dlp", "-F", link], capture_output=True, text=True)
     table = t.stdout.strip()
     if not "ERROR" in table:
@@ -17,7 +17,7 @@ def quality_checker(link):
         return available_formats
                 
 
-def downloader(link, quality):
+def video_download(link, quality):
     n = subprocess.run(["yt-dlp", "--print", "title", "--no-warnings", link], capture_output=True, text=True)
     name = n.stdout.strip()
     if not "ERROR" in name:
@@ -34,7 +34,7 @@ def downloader(link, quality):
 
         return channel, name, final_file
 
-def audio_downloader(link):
+def audio_download(link):
     n = subprocess.run(["yt-dlp", "--print", "title", "--no-warnings", link], capture_output=True, text=True)
     name = n.stdout.strip()
     if not "ERROR" in name:
@@ -45,7 +45,7 @@ def audio_downloader(link):
 
         return channel, name, filename
 
-def thumb_downloader(link):
+def thumb_download(link):
     n = subprocess.run(["yt-dlp", "--print", "title", "--no-warnings", link], capture_output=True, text=True)
     name = n.stdout.strip()
     if not "ERROR" in name:

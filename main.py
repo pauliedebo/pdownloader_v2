@@ -12,6 +12,8 @@ from aiogram.filters.command import Command
 from handlers.basic_router import command_router
 from handlers.behav_router import link_router, video_link
 
+from processes import quality, video_download, audio_download, thumb_download, deletion
+
 logging.basicConfig(level=logging.INFO)
 
 load_dotenv()
