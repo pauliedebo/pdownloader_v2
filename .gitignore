@@ -1,3 +1,4 @@
 .env
 downloads/
 .venv
+handlers/__pycache__
