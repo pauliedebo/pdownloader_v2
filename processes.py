@@ -23,12 +23,12 @@ def video_download(link, quality):
     if not "ERROR" in name:
         ch = subprocess.run(["yt-dlp", "--print", "channel", "--no-warnings", link], capture_output=True, text=True)
         channel = ch.stdout.strip()
-        download = subprocess.run(["yt-dlp", "--embed-thumbnail", "-S", f"res:{quality}", "-o", f"Downloaded/{name}-{quality}p.%(ext)s", link], capture_output=True, text=True)
+        download = subprocess.run(["yt-dlp", "--embed-thumbnail", "-S", f"res:{quality}", "-o", f"downloads/{name}-{quality}p.%(ext)s", link], capture_output=True, text=True)
         download_status = download.stdout.strip()
-        f = subprocess.run(["find", "Downloaded", "-name", f"{name}*{quality}p*"], capture_output=True, text=True)
+        f = subprocess.run(["find", "downloads", "-name", f"{name}*{quality}p*"], capture_output=True, text=True)
         filename = f.stdout.strip().split('/')[-1]
-        subprocess.run(["ffmpeg", "-n", "-i", f"Downloaded/{filename}", f"Downloaded/{name}-{quality}p.mp4"])
-        subprocess.run(["rm", f"Downloaded/{filename}"])
+        subprocess.run(["ffmpeg", "-n", "-i", f"downloads/{filename}", f"downloads/{name}-{quality}p.mp4"])
+        subprocess.run(["rm", f"downloads/{filename}"])
         
         final_file = f"{name}-{quality}p.mp4"
 
@@ -40,7 +40,7 @@ def audio_download(link):
     if not "ERROR" in name:
         ch = subprocess.run(["yt-dlp", "--print", "channel", "--no-warnings", link], capture_output=True, text=True)
         channel = ch.stdout.strip()
-        subprocess.run(['yt-dlp', '-x', '--audio-format', 'mp3', '-o', f"Downloaded/{name}.%(ext)s", link], capture_output=True, text=True)
+        subprocess.run(['yt-dlp', '-x', '--audio-format', 'mp3', '-o', f"downloads/{name}.%(ext)s", link], capture_output=True, text=True)
         filename = f"{name}.mp3"
 
         return channel, name, filename
@@ -51,10 +51,10 @@ def thumb_download(link):
     if not "ERROR" in name:
         ch = subprocess.run(["yt-dlp", "--print", "channel", "--no-warnings", link], capture_output=True, text=True)
         channel = ch.stdout.strip()
-        thumb = subprocess.run(["yt-dlp", "--write-thumbnail", "--skip-download", "--convert-thumbnails", "jpg", "-o", f"Downloaded/{name}.%(ext)s", link])
+        thumb = subprocess.run(["yt-dlp", "--write-thumbnail", "--skip-download", "--convert-thumbnails", "jpg", "-o", f"downloads/{name}.%(ext)s", link])
         thumbnail = f"{name}.jpg"
 
         return name, channel, thumbnail
 
 def deletion(path):
-    subprocess.run(["rm", f"Downloaded/{path}"])
+    subprocess.run(["rm", f"downloads/{path}"])
